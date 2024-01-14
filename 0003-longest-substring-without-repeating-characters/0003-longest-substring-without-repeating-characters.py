@@ -1,14 +1,13 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        maxLen = 1
-        if s == '':
-            return 0                      # Dealing with one edge case
+        dic = {}
+        res = 0
+        j = 0
         for i in range(len(s)):
-            substring = s[i]              # Initialising the substring
-            for j in range(i+1, len(s)):  # Starting to append characters to substring from i+1
-                if s[j] not in substring: # As long as its not repeating. "not in" can be used to check if the character isn't already there in the substring
-                    substring = substring + s[j]
-                    maxLen = max(maxLen, len(substring)) # Updating maxLen if it is greater than the existing maxLen
-                else:
-                    break
-        return maxLen
+            if s[i] not in dic:
+                dic[s[i]] = i
+            else:
+                j = max(j, dic[s[i]]+1)
+                dic[s[i]] = i
+            res = max(res, i-j+1)
+        return res
