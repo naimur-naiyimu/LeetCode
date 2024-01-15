@@ -1,17 +1,19 @@
 class Solution:
-  def checkInclusion(self, s1: str, s2: str) -> bool:
-    count = collections.Counter(s1)
-    required = len(s1)
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        cntr, w, match = Counter(s1), len(s1), 0     
 
-    for r, c in enumerate(s2):
-      count[c] -= 1
-      if count[c] >= 0:
-        required -= 1
-      if r >= len(s1):  # The window is oversized.
-        count[s2[r - len(s1)]] += 1
-        if count[s2[r - len(s1)]] > 0:
-          required += 1
-      if required == 0:
-        return True
+        for i in range(len(s2)):
+            if s2[i] in cntr:
+                if not cntr[s2[i]]: match -= 1
+                cntr[s2[i]] -= 1
+                if not cntr[s2[i]]: match += 1
 
-    return False
+            if i >= w and s2[i-w] in cntr:
+                if not cntr[s2[i-w]]: match -= 1
+                cntr[s2[i-w]] += 1
+                if not cntr[s2[i-w]]: match += 1
+
+            if match == len(cntr):
+                return True
+
+        return False
