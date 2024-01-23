@@ -5,13 +5,23 @@
 #         self.next = next
 class Solution:
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-        fast = slow = head
-        for _ in range(n):
+        dummy = ListNode(-1)
+        dummy.next = head
+        fast = head
+        slow = dummy
+        
+        for i in range(n):
             fast = fast.next
-        if not fast:
-            return head.next
-        while fast.next:
+        
+        while fast:
             fast = fast.next
             slow = slow.next
-        slow.next = slow.next.next
-        return head
+        
+        tmp = slow.next.next
+        slow.next.next = None
+        slow.next = tmp
+        
+        return dummy.next
+
+# Time: O(N)    where N is the length of Linkedlist
+# Space: O(1)
