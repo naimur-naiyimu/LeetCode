@@ -1,7 +1,6 @@
 class Solution:
     def countNegatives(self, grid: List[List[int]]) -> int:
         c = 0
-
         for lst in grid:
             l, r = 0, len(lst) - 1
             while l <= r:
@@ -18,5 +17,4 @@ class Solution:
                 else:
                     # Search the right half
                     l = m + 1
-
         return c
